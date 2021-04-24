@@ -45,5 +45,23 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/dimTextHello" />
 
+    <EditText
+        android:id="@+id/editUri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:inputType="textUri"
+        android:text="@string/defaultUrl"
+        android:autofillHints="@string/defaultUrl"
+        tools:ignore="LabelFor" />
+
+    <Button
+        android:id="@+id/btnBrowse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/go" />
+
+
 
 </LinearLayout>

@@ -3,6 +3,7 @@ package com.example.gb_2_05_intents;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,18 +37,27 @@ public class MainActivity extends AppCompatActivity implements Constants {
         });
 
         Button btnSettings = findViewById(R.id.btnSettings);
-        btnSettings.setOnClickListener(new View.OnClickListener() {
+        btnSettings.setOnClickListener(v -> {
+            // Чтобы стартовать активити, надо подготовить интент
+            // В данном случае это будет явный интент, поскольку здесь передаётся класс активити
+            Intent runSettings = new Intent(MainActivity.this, SettingsActivity.class);
+            populateAccount();
+            // Передача данных через интент
+            runSettings.putExtra(YOUR_ACCOUNT, account);
+            // Метод стартует активити, указанную в интенте
+            startActivityForResult(runSettings, REQUEST_CODE_SETTING_ACTIVITY);
+
+        });
+
+        final EditText site = findViewById(R.id.editUri);
+        Button go = findViewById(R.id.btnBrowse);
+        go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Чтобы стартовать активити, надо подготовить интент
-                // В данном случае это будет явный интент, поскольку здесь передаётся класс активити
-                Intent runSettings = new Intent(MainActivity.this, SettingsActivity.class);
-                populateAccount();
-                // Передача данных через интент
-                runSettings.putExtra(YOUR_ACCOUNT, account);
-                // Метод стартует активити, указанную в интенте
-                startActivityForResult(runSettings, REQUEST_CODE_SETTING_ACTIVITY);
-
+                String url = site.getText().toString();
+                Uri uri = Uri.parse(url);
+                Intent browser = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(browser);
             }
         });
     }

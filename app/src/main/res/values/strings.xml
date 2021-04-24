@@ -8,5 +8,8 @@
     <string name="your_age">Your age</string>
     <string name="your_e_mail">Your e-mail</string>
     <string name="_return">Return</string>
+    <string name="defaultUrl">https://geekbrains.ru</string>
+    <string name="go">go</string>
+
 
 </resources>

@@ -9,5 +9,8 @@
     <string name="your_age">Ваш возраст</string>
     <string name="your_e_mail">Ваш электронный адрес</string>
     <string name="_return">Возврат</string>
+    <string name="defaultUrl">https://geekbrains.ru</string>
+    <string name="go">Поехали!</string>
+
 
 </resources>
