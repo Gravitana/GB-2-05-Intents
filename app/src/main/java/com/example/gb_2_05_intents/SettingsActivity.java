@@ -2,6 +2,7 @@ package com.example.gb_2_05_intents;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +30,9 @@ public class SettingsActivity extends AppCompatActivity implements Constants {
 
         Button btnReturn = findViewById(R.id.btnReturn);
         btnReturn.setOnClickListener(v -> {
+            Intent intentResult = new Intent();
+            intentResult.putExtra(YOUR_ACCOUNT, createAccount());
+            setResult(RESULT_OK, intentResult);
             // Метод finish() завершает активити
             finish();
         });
@@ -46,6 +50,14 @@ public class SettingsActivity extends AppCompatActivity implements Constants {
         editSurname.setText(account.getSurName());
         editAge.setText(String.format(Locale.getDefault(), "%d", account.getAge()));
         editEmail.setText(account.getEmail());
+    }
+
+    private Account createAccount() {
+        return new Account(
+                editName.getText().toString(),
+                editSurname.getText().toString(),
+                Integer.parseInt(editAge.getText().toString()),
+                editEmail.getText().toString());
     }
 
 }

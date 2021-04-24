@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity implements Constants {
     private EditText txtName;
     private Account account;
 
+    private static final int REQUEST_CODE_SETTING_ACTIVITY = 99;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements Constants {
                 // Передача данных через интент
                 runSettings.putExtra(YOUR_ACCOUNT, account);
                 // Метод стартует активити, указанную в интенте
-                startActivity(runSettings);
+                startActivityForResult(runSettings, REQUEST_CODE_SETTING_ACTIVITY);
 
             }
         });
@@ -53,4 +55,35 @@ public class MainActivity extends AppCompatActivity implements Constants {
     private void populateAccount() {
         account.setName(txtName.getText().toString());
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /*
+            Чтобы понять, какая активити возвращает результат, передаётся код запроса в первом параметре.
+            Надо проверить этот параметр и обрабатывать результат, если только код совпадает.
+            Если вам потребуется обрабатывать результаты сразу нескольких активити,
+            то вы всегда можете ориентироваться на этот параметр.
+            Потому что может быть такое, что вам нужно открывать разные активити из одного экрана
+            и от каждой получать какой-то результат обратно.
+         */
+        if (requestCode != REQUEST_CODE_SETTING_ACTIVITY) {
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+
+        /*
+            Также можно проверить код возврата. Он может быть RESULT_OK, RESULT_CANCELED
+            или может быть произвольным и базироваться на значении RESULT_FIRST_USER — результат,
+            определённый пользователем, отсюда и такое название.
+            Это значение можно модифицировать, например, простым увеличением на единицу.
+         */
+        if (resultCode == RESULT_OK){
+            account = data.getParcelableExtra(YOUR_ACCOUNT);
+            populateView();
+        }
+    }
+
+    private void populateView(){
+        txtName.setText(account.getName());
+    }
+
 }
